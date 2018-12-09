@@ -1,0 +1,29 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <form class="form-signup" action="/auctionsetup" method="POST" >
+            <div class="card card-body bg-light">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">Set Auction Details!!</h1>
+                </div>       
+                <div class="mb-4">
+                    <div class="form-group">
+                        <label for="maximumPost">Maximun number of items</label>
+                        <input type="number" class="form-control" name="maximumPost" id="MPL" placeholder="Max Post limit">
+                    </div>
+                    <div class="form-group">
+                        <label for="startTime">Auction start time</label>
+                        <input type="datetime-local" class="form-control" name="startTime" id="startTime" placeholder="Auction start time">
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">Auction end time</label>
+                        <input type="datetime-local" class="form-control" name="endTime" id="endTime" placeholder="Auction end time">
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

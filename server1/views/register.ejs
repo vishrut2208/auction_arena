@@ -1,0 +1,62 @@
+<% include partials/header %>
+
+
+
+<form class="form-signup" action="/register", method="POST">
+<div class="card card-body bg-light">   
+      <div class="text-center mb-4">
+        <img class="mb-4" src="data:image/png;base64,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" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+      </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="Email">Email</label>
+      <input type="email" class="form-control" id="Email" placeholder="Email">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" id="inputPassword4" name="password" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="form-group">
+    <label for="inputAddress2">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputCity">City</label>
+      <input type="text" class="form-control" id="inputCity">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">State</label>
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>...</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="inputZip">Zip</label>
+      <input type="text" class="form-control" id="inputZip">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Sign in</button>
+  </div>
+</form>
+
+<% include partials/footer %>

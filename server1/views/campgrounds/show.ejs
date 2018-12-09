@@ -1,0 +1,83 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <p class="lead">Auction Item</p>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="thumbnail" id="itemimage">
+                <img class="img-responsive" src="<%= item.image %>">
+                <div class="figure-caption">
+                    <h4 class="float-right"> MB: $<%= item.minimumBid %></h4>
+                    <h4 class="font-italic"><%=item.name%></h4>
+                    <p><%= item.description %></p>
+                    <p>
+                       <em>Submitted By <%= item.author.username %></em>
+                    </p>
+                    <% if(currentUser && item.author.id.equals(currentUser._id)){ %>
+                        <a class="btn btn-xs btn-warning" href="/campgrounds/<%=item._id%>/edit">Edit</a>
+                        <form class="delete-form" action="/campgrounds/<%= item._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    <% } %>    
+                </div>
+            </div>
+            <div class="card card-body bg-light">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/campgrounds/<%= item._id %>/comments/new">Add New Comment</a>                
+                </div>
+                <hr>
+                <% item.comments.forEach(function(comment){%>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="float-right"><%= moment(comment.updatedAt).startOf('day').fromNow();%></span>
+                            <p>
+                                <%= comment.text%>
+                            </p>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                <a class="btn btn-xs btn-warning" 
+                                    href="/campgrounds/<%=item._id%>/comments/<%= comment._id %>/edit">
+                                    Edit
+                                </a>
+                                <form class="delete-form" action="/campgrounds/<%=item._id%>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <input type="submit" class="btn btn-xs btn-danger" value="delete">
+                                </form>
+                            <% } %>                        
+                        </div>
+                    </div>
+                <% })%>
+            </div>    
+        </div>
+        <div class="col-md-6">
+                <div class="card card-body bg-light">
+                    <h4 class="float-left"><strong>Bid Table</strong></h4>
+                        <% if(currentUser && !item.author.id.equals(currentUser._id)){ %>
+                        <div class="float-right">
+                        <a class="btn btn-success" href="/campgrounds/<%= item._id %>/bids/new">Add New Bid</a>
+                        </div>
+                        <% } %>
+                <hr>
+                <table class="table table-bordered table-hover" id="summarytable" class="display">
+                    <thead class="thead-dark">
+                        <tr>
+                          <th scope="col" >Bidder Name</th>
+                          <th scope="col" >Bidding Amount</th>
+                          <th scope="col" >Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% item.bids.forEach(function(bid){%>
+                            <tr>
+                                <th><strong><%= bid.bidder.biddername %></strong></th>
+                                <th>$<%= bid.bidamount%></th>
+                                <th><%= moment(bid.updatedAt).format('MMMM Do YYYY, h:mm:ss a'); %></th>
+                            </tr>
+                        <% })%>
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
