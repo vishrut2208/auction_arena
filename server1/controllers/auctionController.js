@@ -8,9 +8,12 @@ var slots = require("../models/slotTable")
 
 function getItems(req, res){
     try{
-    Item.find({}, function(err, allitems){
+    var now = JSON.stringify(new Date()).slice(1, 11);
+
+    Item.find({auctionDate: now}, function(err, allitems){
         if(err){
             console.log(err);
+
             res.status(404);
             res.send('404: Resource Not Found');
         }else{
@@ -40,12 +43,12 @@ function postItem(req, res){
     }
     var newItem = {name: name, image: image, description: desc, minimumBid:minimumBid, auctionDate: auctionDate, auctionSlot: auctionSlot, author: author}
 
-    console.log(newItem)
+    //console.log(newItem)
     axios.create({
         baseURL: "http://localhost:3001/",
         headers: { "X-Custom-Token": "super007" }
     }).post("member/postItem", newItem).then((response)=> {
-        console.log("Successsssssssssssssssss");
+        //console.log("Successsssssssssssssssss");
         res.redirect("/campgrounds");
         if(response.data.success){
             return res.send({
@@ -59,11 +62,12 @@ function postItem(req, res){
             })
         }
     }).catch(function (error) {
-        console.log("Errorrrrrrrrrrrrrrrrrrrrrr")
+        //console.log("Errorrrrrrrrrrrrrrrrrrrrrr")
         console.log(error.response);
     });
-
 }
+
+
 
 function newItemPage(req, res) {
     try{
@@ -87,6 +91,7 @@ function newItemPage(req, res) {
     }
    //res.render("campgrounds/new");
 }
+
 
 function getSlot(req, res) {
     //console.log(JSON.stringify(req.query.params))
@@ -119,6 +124,7 @@ function getSlot(req, res) {
 
 }
 
+
 function getItem(req, res) {
     try{
    Item.findById(req.params.id).populate("comments").populate("bids").exec(function(err, foundItem){
@@ -141,11 +147,45 @@ catch(err){
 }
 
 
+
+function deleteItem(req, res){
+    console.log(req.params.id);
+
+    axios.create({
+        baseURL: "http://localhost:3001/",
+        headers: { "X-Custom-Token": "super007" }
+    }).post("/" + req.params.id + "?_method=DELETE", req.params.id).then((response)=> {
+        console.log("Successsssssssssssssssss");
+        res.redirect("/campgrounds");
+        if(response.data.success){
+            return res.send({
+                success : true
+
+            })
+
+        } else {
+            return res.send({
+                success : false
+            })
+        }
+    }).catch(function (error) {
+        console.log("Errorrrrrrrrrrrrrrrrrrrrrr===============================================")
+        console.log(error.response);
+    });
+
+};
+
+
+
+
+
+
 module.exports = { getItems,
                    postItem,
                    newItemPage,
                    getItem,
-                   getSlot
+                   getSlot,
+                   deleteItem
                 }
     
 

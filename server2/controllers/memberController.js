@@ -13,7 +13,7 @@ function postItem(req, res){
             console.log("Something wrong when updating data!");
         }
 
-        console.log(doc);
+        //console.log(doc);
     });
 
     Item.create(newItem, function(err, newlyCreated){
@@ -26,6 +26,22 @@ function postItem(req, res){
     });
 }
 
-module.exports = { postItem }
+function deleteItem(req, res){
+
+    console.log("i am here in server2")
+
+    console.log(JSON.stringify(req.params.id));
+
+    Item.findByIdAndRemove(req.params.id, function(err){
+       if(err){
+           console.log(err);
+        } else {
+           res.send('success');
+        }
+    });
+}
+
+module.exports = { postItem,
+                   deleteItem}
     
 

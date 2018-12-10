@@ -2,7 +2,7 @@
 
     <div class="container">
         <header class="jumbotron">
-            <div class="container">
+            <div class="container" style="text-align: center">
                 <h1>Welcome to AuctionArena!</h1>
                 <p>View our trusted collection of items from all over the world</p>
                 <p>
@@ -11,15 +11,18 @@
             </div>
         </header>
         
-        <div class="d-flex align-content-start flex-wrap text-center">
+        <div class="row text-center text-lg-left" style="display:flex; flex-wrap: wrap">
             <div class="col-lg-12">
-                <h3>Our Most popular items</h3>
+                <h3>Items available for biding today </h3>
                 <% items.forEach(function(item){%>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                         <div class="thumbnail" id="home">
-                            <img class="img-fluid" src="<%= item.image%>">
+                            <img class="img-fluid rounded float-left" src="<%= item.image%>" alt="<%= item.name%>">
                             <div class="figure-caption">
                                 <h4><%= item.name%></h4>
+                            </div>
+                            <div class="figure-caption">
+                                <h4>StartTime: <%= item.auctionSlot%></h4>
                             </div>
                             <p>
                                 <a href="/campgrounds/<%= item._id %>" class="btn btn-primary">More Info</a>

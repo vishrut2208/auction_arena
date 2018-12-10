@@ -16,6 +16,8 @@ function adminPost(req, res) {
     var diff = moment(endTime).diff(moment(startTime), 'minutes');
     var perHour = Math.floor(diff/ maximumPost);
     var auctionDate = startTime.slice(0, 10)
+    console.log(typeof auctionDate)
+    console.log(auctionDate)
     var newItem = {
         auctionDate: auctionDate,
         maximumPost: maximumPost,
@@ -27,7 +29,7 @@ function adminPost(req, res) {
     adminpost.find({auctionDate: auctionDate}, function (err, post) {
         if (err) {
             console.log(err)
-            res.redirect("/campgrounds");
+            res.redirect("auctionsetup/new");
         } else if (post.length >= 1) {
             req.flash("error", "The auction date is already setup");
             //console.log(post)
@@ -39,7 +41,7 @@ function adminPost(req, res) {
                 baseURL: "http://localhost:3001/",
                 headers: {"X-Custom-Token": "super007"}
             }).post("admin/auctionsetup", newItem).then((response) => {
-                console.log("Successsssssssssssssssss");
+                //console.log("Successsssssssssssssssss");
                 res.redirect("/campgrounds");
                 if (response.data.success) {
                     return res.send({
@@ -51,8 +53,8 @@ function adminPost(req, res) {
                     })
                 }
             }).catch(function (error) {
-                console.log("Errorrrrrrrrrrrrrrrrrrrrrr")
-                console.log(error.response);
+                //console.log("Errorrrrrrrrrrrrrrrrrrrrrr")
+                //console.log(error.response);
             });
 
 

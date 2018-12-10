@@ -7,8 +7,8 @@ var itemSchema = new mongoose.Schema({
     description: String,
     imageTag: String,
     minimumBid: Number,
-    auctionDate: Date,
-    auctionSlot: Date,
+    auctionDate: String,
+    auctionSlot: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

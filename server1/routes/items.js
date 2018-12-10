@@ -20,7 +20,11 @@ router.get("/newslots", middleware.isLoggedIn, controller.getSlot);
 //show- shows more info about one campground
 router.get("/:id", controller.getItem);
 
-//Edit Campground route
+// Destroy item route
+
+router.post("/:id", middleware.checkCampgroundOwnership, controller.deleteItem)
+
+//Edit item route
 
 router.get("/:id/edit", middleware.checkCampgroundOwnership ,function(req, res) {
     Item.findById(req.params.id, function(err, foundItem){
@@ -50,15 +54,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
 
 // Destroy Campground route
 
-router.delete("/:id", middleware.checkCampgroundOwnership,function(req, res){
-    Item.findByIdAndRemove(req.params.id, function(err){
-       if(err){
-           res.redirect("/campgrounds");
-        } else {
-            res.redirect("/campgrounds");
-        } 
-    });
-});
+
 
 // router.get("/*", function(req, res){
 //     res.status(404);

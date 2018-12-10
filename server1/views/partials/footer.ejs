@@ -34,6 +34,9 @@
                         console.log(data)
                         var x = document.getElementById("auctionSlot");
                         console.log(x);
+                        for(val in x){
+                            x.remove(x.val)
+                        }
                         data.forEach(function (slot) {
                             var option = document.createElement("option");
                             option.text = slot.startTime + " -- " + slot.endTime;
