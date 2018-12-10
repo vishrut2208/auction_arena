@@ -3,10 +3,10 @@ var router  = express.Router({mergeParams: true});
 var Item = require("../models/item");
 var middleware = require("../middleware");
 var controller = require("../controllers/auctionController")
-
+var cacheware = require("../middleware/cacheresponse").data
 
 //Index- show all campgrounds
-router.get("/", controller.getItems);
+router.get("/",cacheware.cache(20), controller.getItems);
 
 //Create - add new campground
 router.post("/",middleware.isLoggedIn, controller.postItem);

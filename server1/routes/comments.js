@@ -3,6 +3,7 @@ var router = express.Router({mergeParams: true});
 var Item = require("../models/item");
 var Comment = require("../models/comment");
 var middleware = require("../middleware");
+var cacheware = require("../middleware/cacheresponse").data
 
 // Comments New
 

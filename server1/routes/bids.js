@@ -4,6 +4,7 @@ var Item = require("../models/item");
 var Bid = require("../models/bid");
 var middleware = require("../middleware");
 var controller = require("../controllers/bidController")
+var cacheware = require("../middleware/cacheresponse").data
 
 // Bids New
 
