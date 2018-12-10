@@ -23,7 +23,8 @@ var itemRoutes = require("./routes/items");
 var adminRoutes = require("./routes/adminRoute")
 const biController = require("./controllers/bidController")
 
-mongoose.connect("mongodb+srv://admin:admin@cluster0-oxtvz.mongodb.net/online_auction?retryWrites=true");
+//mongoose.connect("mongodb+srv://admin:admin@cluster0-oxtvz.mongodb.net/online_auction?retryWrites=true");
+mongoose.connect("mongodb://localhost:27017/auction_arena")
 app.use(comp());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

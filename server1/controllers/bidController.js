@@ -38,44 +38,54 @@ function showBids(req, res) {
       }
    });
    
+   
 }
 
 function newBid(req, res){
    //lookup campground using id
+   try{
    Item.findById(req.params.id, function(err, item) {
       if(err){
           console.log(err)
           res.redirect("/campgrounds");
-      }else{
-        //   Bid.create(req.body.bid, function(err, bid){
-        //       if(err){
-        //           req.flash("error", "Something went wrong");
-        //           console.log(err);
-        //       }else{
-                  //add username and id to comment
-                //   bid.bidder.id = req.user._id;
-                //   bid.bidder.biddername = req.user.username;
-                //   //save comment
-                //   bid.save();
-                //   item.bids.push(bid);
-                //   item.save();
-                //   req.flash("success", "Successfully added bid");
-                //   res.redirect('/campgrounds/' + item._id);
-                //   });
-    //   } 
-                rsmq.sendMessage({qname:"bidqueue", message:req.body}, function (err, resp) {
-                    if (resp) {
-                        req.flash("success", "Bid placed in queue");
-                        res.redirect('/campgrounds/' + item._id);
-                    }
-                    if(err){
-                        req.flash("error", "Error in pushing bid");
-                    }
-                }); 
+          res.send(500)
+      }else{    
+            let payload={
+                bidAmount:req.body.bid.bidamount,
+                user_id:req.user._id,
+                username:req.user.username,
+                item_id:req.params.id
+            };
+            rsmq.sendMessage({qname:"bidqueue", message:JSON.stringify(payload)}, function (err, resp) {
+                if (resp) {
+                    req.flash("success", "Bid placed in queue");
+                    res.redirect('/campgrounds/' + item._id);
+                    res.send(200)
+                }
+                else if(err){
+                    req.flash("error", "Error in pushing bid");
+                    console.log("err")
+                    res.redirect("/campgrounds");
+                    res.send(500)
+                }
+                else{
+                    req.flash("error", "Error in pushing bid...Please try again");
+                    console.log("err")
+                    res.redirect("/campgrounds");
+                    res.send(500)
+                }
+            }); 
+            
                 
-              }
+        }
         
    });
+}
+catch(err){
+    req.flash("error", "Error in pushing bid...Please try again");
+    console.log(err)
+    res.send(500)
+}
 }
 
 
