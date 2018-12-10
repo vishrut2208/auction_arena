@@ -1,0 +1,33 @@
+<% include ../partials/header %>
+
+
+<div class="container">
+    <div class="profileContainer">
+        <div class="row">
+            <div class="col-md-3 img">
+                <span style="font-size: 9em; color: Tomato; margin: auto .30em">
+                    <i class="far fa-user-circle" "></i><br>
+
+                </span>
+                <!--<div style="text-align: left"><a href="profile/edit">Edit Profile</a></div>-->
+                <div style="text-align:center"><a href="profile/edit">Edit Profile</a></div>
+
+            </div>
+            <div class="col-md-6 details">
+                <blockquote>
+                    <h5><%=user.firstName%> <%=user.lastName%></h5>
+                    <small><cite title="Source Title"><%=user.address1%>, <br><%=user.city%>, <%=user.state%>,<br> United States of America  <i class="icon-map-marker"></i></cite></small>
+                </blockquote>
+                <p>
+                    <%=user.email%> <br>
+                    <%=user.phone%> <br>
+                    <%=user.dob%> <br>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<% include ../partials/footer %>

@@ -101,3 +101,17 @@ p { word-break: break-all }
 }
 
 
+
+.profileContainer{
+  padding:5%;
+}
+.profileContainer .proficon{
+  text-align:center;
+}
+.profileContainer .details{
+  border-left:3px solid #ded4da;
+}
+.profileContainer .details p{
+  font-size:15px;
+  font-weight:bold;
+}

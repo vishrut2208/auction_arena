@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+
+        <div style="width: 30%; margin: 25px auto;" class="card">
+            <div class="card-header"><h4>Edit Your Profile <%= user.firstname %></h4></div>
+            <div class="card-body">
+                <form action="/profile/edit?_method=PUT" method="POST">
+                    <div class="form-group ">
+                        <label for="profile[firstname]">First Name</label>
+                        <input class="form-control" type="text" name="profile[firstName]" value="<%= user.firstName %>">
+                        <label for="profile[lastName]">Last Name</label>
+                        <input class="form-control" type="text" name="profile[lastName]" value="<%= user.lastName %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile[phone]">Phone</label>
+                        <input class="form-control" type="tel" name="profile[phone]" value="<%= user.phone %>">
+                        <label for="profile[email]">Email</label>
+                        <input class="form-control" type="email" name="profile[email]" value="<%= user.email %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile[address1]">Address1 </label>
+                        <input class="form-control" type="text" name="profile[address1]" value="<%= user.address1%>">
+                        <label for="profile[address2]">Address2 </label>
+                        <input class="form-control" type="text" name="profile[address2]" value="<%= user.address2%>">
+                        <label for="profile[city]">City</label>
+                        <input class="form-control" type="text" name="profile[city]" value="<%= user.city%>">
+                        <label for="profile[state]">State</label>
+                        <input class="form-control" type="text" name="profile[state]" value="<%= user.state%>">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                    </div>
+                </form>
+                <a href="/profile">Go Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>

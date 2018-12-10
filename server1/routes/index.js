@@ -20,7 +20,7 @@ router.post("/register", controller.createUser);
 
 router.get("/login", controller.getLogin);
 
-router.get("/profile", controller.getLogin);
+// router.get("/profile", controller.getLogin);
 
 router.post("/login", passport.authenticate("local",
     {
@@ -32,6 +32,10 @@ router.post("/login", passport.authenticate("local",
     }),function(req, res){
         console.log(req.body);
 });
+
+router.get("/contact", controller.getContact);
+
+
 
 // logout route
 

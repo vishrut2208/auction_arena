@@ -21,13 +21,15 @@ const   commentRoutes    = require("./routes/comments"),
         itemRoutes = require("./routes/items"),
         indexRoutes       = require("./routes/index"),
         bidRoutes         = require("./routes/bids"),
-        adminsetupRoutes= require("./routes/adminsetup");
+        adminsetupRoutes= require("./routes/adminsetup"),
+        userRoutes = require("./routes/userProfile");
+
 //         const   RedisSMQ = require("rsmq");
 // var rsmq = new RedisSMQ( {host: "127.0.0.1", port: 6379, ns: "rsmq", realtime:true} );
 
 
 //mongoose.connect("mongodb+srv://admin:admin@cluster0-oxtvz.mongodb.net/online_auction?retryWrites=true");
-mongoose.connect("mongodb://localhost:27017/auction_arena")
+mongoose.connect("mongodb://localhost:27017/auction_arena");
 app.use(comp());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -78,7 +80,8 @@ app.use(function(req, res, next){
 //   });
 
 app.use("/",indexRoutes);
-app.use("/profile",indexRoutes);
+app.use("/contact", indexRoutes)
+app.use("/profile",userRoutes);
 app.use("/campgrounds",itemRoutes);
 app.use("/auctionsetup", adminsetupRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);

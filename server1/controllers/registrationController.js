@@ -46,11 +46,16 @@ function logout(req, res) {
     res.redirect("/campgrounds");
 }
 
+//fetch contact page
+function getContact(req, res){
+    res.render("contact");
+}
 
 module.exports = { getFrontPage,
                    getRegisterPage,
                    createUser,
                    getLogin,
-                   logout
+                   logout,
+                   getContact
                 }
 
