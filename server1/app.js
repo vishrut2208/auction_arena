@@ -13,8 +13,8 @@ var   express     = require("express"),
         //seedDB     = require("./seeds"),
         passport   = require("passport"),
         LocalStrategy = require("passport-local"),
-        moment       = require("moment");
-        comp = require('compression')
+        moment       = require("moment"),
+        comp = require('compression');
 
 //requiring Routes
 const   commentRoutes    = require("./routes/comments"),
