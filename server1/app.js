@@ -58,12 +58,35 @@ app.use(function(req, res, next){
     res.locals.success = req.flash("success");
     next();
 });
+// app.use(function(req, res, next){
+//     res.status(404);
+  
+//     // respond with html page
+//     if (req.accepts('html')) {
+//       res.render('404', { url: req.url });
+//       return;
+//     }
+  
+//     // respond with json
+//     if (req.accepts('json')) {
+//       res.send({ error: 'Not found' });
+//       return;
+//     }
+  
+//     // default to plain-text. send()
+//     res.type('txt').send('Not found');
+//   });
+
 app.use("/",indexRoutes);
 app.use("/profile",indexRoutes);
 app.use("/campgrounds",itemRoutes);
 app.use("/auctionsetup", adminsetupRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
 app.use("/campgrounds/:id/bids",bidRoutes);
+app.use(function(req, res, next) {
+    res.status(404);
+    res.send('404: Resource Not Found');
+});
 
 app.listen("3000", "127.0.0.1", function(){
    console.log("The AuctionService Frontend Server Has Started!")

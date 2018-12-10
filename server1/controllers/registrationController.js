@@ -18,6 +18,7 @@ function createUser(req, res) {
     }else{
         newUser = new User({username: req.body.username, userType: "General"});
     }
+    try{
     User.register(newUser, req.body.password, function(err, user){
        if(err){
            req.flash("error", err.message);
@@ -28,6 +29,11 @@ function createUser(req, res) {
            res.redirect("/campgrounds");
        });
     });
+}
+catch(err){
+    res.status(500);
+            res.send('500: Internal server error');
+}
 }
 
 function getLogin(req, res){

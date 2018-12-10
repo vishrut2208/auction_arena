@@ -24,7 +24,12 @@ router.get("/:id", controller.getItem);
 
 router.get("/:id/edit", middleware.checkCampgroundOwnership ,function(req, res) {
     Item.findById(req.params.id, function(err, foundItem){
-        res.render("campgrounds/edit", {item: foundItem})
+        if(err){
+            res.status(404);
+            res.send('404: Resource Not Found');
+        }
+        else
+            res.render("campgrounds/edit", {item: foundItem})
     });
 });
 
@@ -55,7 +60,10 @@ router.delete("/:id", middleware.checkCampgroundOwnership,function(req, res){
     });
 });
 
-
+// router.get("/*", function(req, res){
+//     res.status(404);
+//     res.send('404: Resource Not Found');
+//   });
 
 module.exports = router;
 

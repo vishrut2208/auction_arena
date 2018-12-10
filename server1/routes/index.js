@@ -36,5 +36,9 @@ router.post("/login", passport.authenticate("local",
 // logout route
 
 router.get("/logout", controller.logout);
+// router.get("*", function(req, res){
+//     res.status(404);
+//     res.send('404: Resource Not Found');
+//   });
 
 module.exports = router;
