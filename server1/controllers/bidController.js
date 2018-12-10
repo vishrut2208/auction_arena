@@ -48,7 +48,6 @@ function newBid(req, res){
       if(err){
           console.log(err)
           res.redirect("/campgrounds");
-          res.send(500)
       }else{    
             let payload={
                 bidAmount:req.body.bid.bidamount,
@@ -59,20 +58,17 @@ function newBid(req, res){
             rsmq.sendMessage({qname:"bidqueue", message:JSON.stringify(payload)}, function (err, resp) {
                 if (resp) {
                     req.flash("success", "Bid placed in queue");
-                    res.redirect('/campgrounds/' + item._id);
-                    res.send(200)
+                    res.redirect('/campgrounds/' + item._id)
                 }
                 else if(err){
                     req.flash("error", "Error in pushing bid");
                     console.log("err")
                     res.redirect("/campgrounds");
-                    res.send(500)
                 }
                 else{
                     req.flash("error", "Error in pushing bid...Please try again");
                     console.log("err")
                     res.redirect("/campgrounds");
-                    res.send(500)
                 }
             }); 
             
