@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Item = require("./models/item");
 var Comment    = require("./models/comment");
 var Bid = require("./models/bid");
-//var User = require("./models/user");
+var User = require("./models/user");
 var admin = require("./models/adminpost")
 var slot = require("./models/slotTable")
 var data = [
@@ -75,13 +75,13 @@ Comment.remove({}, function(err){
         
 });
 
-// User.remove({}, function(err){
-//         if(err){
-//             console.log(err);
-//         }
-//         console.log("removed Users!");
-//
-// });
+User.remove({}, function(err){
+        if(err){
+            console.log(err);
+        }
+        console.log("removed Users!");
+
+});
 
 admin.remove({}, function(err){
         if(err){

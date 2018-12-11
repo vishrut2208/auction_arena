@@ -3,6 +3,7 @@ var router  = express.Router({mergeParams: true});
 var Item = require("../models/item");
 var axios = require("axios");
 var slots = require("../models/slotTable")
+var Bid = require("../models/bid");
 
 
 
@@ -123,7 +124,19 @@ function getSlot(req, res) {
 
 
 }
-
+function getTop5(req, res) {
+    var x = JSON.stringify(new Date()).slice(1,11);
+    Item.find({auctionDate: x}).populate({
+        path: 'Item.bids',
+        options: {sort: 'bidamount'}
+    }).limit(5).exec(function(err, topbids){
+        if(err){
+            console.log(err);
+        }else {
+            res.send(topbids);
+        }
+    });
+}
 
 function getItem(req, res) {
     try{
@@ -185,7 +198,8 @@ module.exports = { getItems,
                    newItemPage,
                    getItem,
                    getSlot,
-                   deleteItem
+                   deleteItem,
+                   getTop5
                 }
     
 

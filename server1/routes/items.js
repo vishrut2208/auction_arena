@@ -17,7 +17,11 @@ router.get("/new",middleware.isLoggedIn, controller.newItemPage);
 //get new slots
 router.get("/newslots", middleware.isLoggedIn, controller.getSlot);
 
-//show- shows more info about one campground
+//get topbids
+
+router.get("/topbids",controller.getTop5);
+
+//show- shows more info about one item
 router.get("/:id", controller.getItem);
 
 // Destroy item route

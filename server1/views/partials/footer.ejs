@@ -17,9 +17,56 @@
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <!--<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>-->
         <script>
-                $("#summarytable").DataTable();
+                var table = $("#summarytable").DataTable();
+                // var table = $("#summarytable").DataTable( {
+                //     ajax: "data.json"
+                // } );
+
+                // setInterval( function () {
+                //     table.ajax.reload();
+                // }, 30000 );
         </script>
 
+        <script>
+            $.fn.dataTable.ext.search.push(
+                function( settings, data, dataIndex ) {
+                    var yearmin = parseInt( $('#min').val().slice(0,4), 10 );
+                    var yearmax = parseInt( $('#max').val().slice(0,4), 10 );
+                    var monthmin = parseInt( $('#min').val().slice(5,7), 10 );
+                    var monthmax = parseInt( $('#max').val().slice(5,7), 10 );
+                    var datemin = parseInt( $('#min').val().slice(8,11), 10 );
+                    var datemax = parseInt( $('#max').val().slice(8,11), 10 );
+
+                    var min = yearmin + monthmin + datemin;
+                    var max = yearmax + monthmax + datemax;
+                    //console.log(min)
+                    //console.log(max)
+                    var year = parseFloat( data[3].slice(0,4)) || 0;
+                    var month = parseFloat( data[3].slice(5,7)) || 0;
+                    var day = parseFloat( data[3].slice(8,11))|| 0;
+                    var date = year + month + day;
+                    // use data for the age column
+                        console.log(date)
+                    if ( ( isNaN( min ) && isNaN( max ) ) ||
+                        ( isNaN( min ) && date <= max ) ||
+                        ( min <= date   && isNaN( max ) ) ||
+                        ( min <= date   && date <= max ) )
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            $(document).ready(function() {
+                var table = $('#itemlisttable').DataTable();
+
+                // Event listener to the two range filtering inputs to redraw on input
+                $('#min, #max').keyup( function() {
+                    table.draw();
+                } );
+            } );
+        </script>
         <script>
             function getslots() {
                 let payload = {
@@ -39,8 +86,8 @@
                         }
                         data.forEach(function (slot) {
                             var option = document.createElement("option");
-                            option.text = slot.startTime + " -- " + slot.endTime;
-                            option.value = slot.startTime;
+                            option.text = slot.startTime + " - " + slot.endTime;
+                            option.value = slot.startTime+ "-"+ slot.endTime;
                             if (x != null) {
                                 x.add(option);
                             }
@@ -51,6 +98,30 @@
                     }
                 );
             }
+        </script>
+
+        <script>
+                setInterval(function() {
+                $.get(
+                    'http://localhost:3000/campgrounds/topbids',
+
+                    (data) => {
+                        console.log(data)
+                        // for(val in x){
+                        //     x.remove(x.val)
+                        // }
+                        data.forEach(function (item) {
+                            item.bids.forEach(function (bid){
+                                $("#latestbid").append("<tr><td>" + item.name + "</td>"+ bid.bidamount+"</td><id>"+ bid.bidder.biddername +"</td></tr>");
+                            });
+
+                        });
+
+                        if (data && data.error) alert(data.error)
+                        if (data && data.success) console.log(data.success);
+                    }
+                );
+            }, 30000);
         </script>
 
 

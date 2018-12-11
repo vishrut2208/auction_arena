@@ -3,12 +3,13 @@ var slot = require("../models/slotTable");
 var mongoose= require("mongoose");
 
 function postItem(req, res){
-    console.log(JSON.stringify(req.body))
+    console.log(JSON.stringify(req.body.auctionSlot))
 
     //var Item = mongoose.model("nameModel", itemSchema);
     var newItem = new Item({name: req.body.name, image: req.body.image, description : req.body.description, minimumBid:req.body.minimumBid, auctionDate:req.body.auctionDate, auctionSlot:req.body.auctionSlot , author: req.body.author});
-
-    slot.findOneAndUpdate({startTime: req.body.auctionSlot}, {$set:{useFlag: false}}, {new: true}, (err, doc) => {
+    console.log(JSON.stringify(req.body.auctionSlot).slice(1,6))
+    console.log(JSON.stringify(req.body.auctionSlot).slice(7,12))
+    slot.findOneAndUpdate({startTime: JSON.stringify(req.body.auctionSlot).slice(1,6)}, {$set:{useFlag: false}}, {new: true}, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
         }
