@@ -132,10 +132,7 @@ function getSlot(req, res) {
 }
 function getTop5(req, res) {
     var x = JSON.stringify(new Date()).slice(1,11);
-    Item.find({auctionDate: x}).populate({
-        path: 'Item.bids',
-        options: {sort: 'bidamount'}
-    }).limit(5).exec(function(err, topbids){
+    Item.find({auctionDate: x}).populate('bids', 'bidamount', null, {sort: { bidamount: -1 }}).exec(function(err, topbids){
         if(err){
             console.log(err);
         }else {

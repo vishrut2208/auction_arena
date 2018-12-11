@@ -54,8 +54,7 @@
                         <% if(currentUser && !item.author.id.equals(currentUser._id) && (item.auctionDate === JSON.stringify(new Date()).slice(1, 11))){ %>
                         <% var x = (JSON.stringify(item.auctionSlot).slice(1,6)).localeCompare(JSON.stringify(new Date()).slice(12,17))%>
                         <% var y = (JSON.stringify(item.auctionSlot).slice(7,12)).localeCompare(JSON.stringify(new Date()).slice(12,17))%>
-                        <%console.log(x) %>
-                            <%console.log(y)%>
+
                         <% if( ((x === -1) || (x ===0)) && ((y === 1) || (y ===0)) ){%>
 
                         <div class="float-right">
@@ -76,7 +75,7 @@
                             <tr>
                                 <th><strong><%= bid.bidder.biddername %></strong></th>
                                 <th>$<%= bid.bidamount%></th>
-                                <th><%= moment(bid.updatedAt).format('MMMM Do YYYY, h:mm:ss a'); %></th>
+                                <th><%= bid.updatedAt %></th>
                             </tr>
                         <% })%>
                     </tbody>

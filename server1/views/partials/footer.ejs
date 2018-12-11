@@ -17,14 +17,7 @@
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <!--<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>-->
         <script>
-                var table = $("#summarytable").DataTable();
-                // var table = $("#summarytable").DataTable( {
-                //     ajax: "data.json"
-                // } );
-
-                // setInterval( function () {
-                //     table.ajax.reload();
-                // }, 30000 );
+            $("#summarytable").DataTable();
         </script>
 
         <script>
@@ -46,7 +39,7 @@
                     var day = parseFloat( data[3].slice(8,11))|| 0;
                     var date = year + month + day;
                     // use data for the age column
-                        console.log(date)
+
                     if ( ( isNaN( min ) && isNaN( max ) ) ||
                         ( isNaN( min ) && date <= max ) ||
                         ( min <= date   && isNaN( max ) ) ||
@@ -106,22 +99,20 @@
                     'https://localhost:3000/campgrounds/topbids',
 
                     (data) => {
-                        console.log(data)
-                        // for(val in x){
-                        //     x.remove(x.val)
-                        // }
+                        $("#latestbid").find("tr:gt(0)").remove();
                         data.forEach(function (item) {
-                            item.bids.forEach(function (bid){
-                                $("#latestbid").append("<tr><td>" + item.name + "</td>"+ bid.bidamount+"</td><id>"+ bid.bidder.biddername +"</td></tr>");
-                            });
-
+                            for(var x=0; x< 1; x++){
+                                if(item.bids.length >0) {
+                                    $("#latestbid").append("<tr><td>" + item.name + "</td><td>$" + item.bids[0].bidamount + "</td></tr>");
+                                }
+                            }
                         });
 
                         if (data && data.error) alert(data.error)
                         if (data && data.success) console.log(data.success);
                     }
                 );
-            }, 30000);
+            }, 3000);
         </script>
 
 

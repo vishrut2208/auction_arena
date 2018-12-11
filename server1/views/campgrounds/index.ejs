@@ -1,103 +1,102 @@
 <% include ../partials/header %>
 
-    <div class="container">
-        <header class="jumbotron">
-            <div class="container" style="text-align: center">
-                <h1>Welcome to AuctionArena!</h1>
-                <p>View our trusted collection of items from all over the world</p>
-                <p>
-                    <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add New Item</a>
-                </p>
-            </div>
-        </header>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container" style="text-align: center">
+            <h1>Welcome to AuctionArena!</h1>
+            <p>View our trusted collection of items from all over the world</p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add New Item</a>
+            </p>
+        </div>
+    </header>
 
-        <div class="row text-center text-lg-left" style="display:flex; flex-wrap: wrap">
-            <div class="col-lg-12">
-                <h3>Items available for biding today </h3>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <% items.forEach(function(item){%>
-                                <% if(item.auctionDate == (JSON.stringify(new Date()).slice(1, 11))){%>
+    <div class="row text-center text-lg-left" style="display:flex; flex-wrap: wrap">
+        <div class="col-lg-12">
+            <h3>Items available for biding today </h3>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <% items.forEach(function(item){ %>
+                            <% if(item.auctionDate == (JSON.stringify(new Date()).slice(1, 11))){ %>
                                 <div class="col-lg-6 col-md-6 col-xs-6 thumb">
                                     <div class="thumbnail" id="home">
-                            		<!-- <img class="img-fluid rounded float-left" src="<%= item.imageUrl%>" alt="<%= item.name%>"> -->
-                            		<img class="img-fluid rounded float-left" src="<%= item.imageUrl%>"  onerror="this.onerror=null;this.src='<%= item._id%>/getPicture';">
-                            		<!-- <img class="img-fluid rounded float-left" src='<%= item._id%>/getPicture'> -->
                                         <div class="figure-caption">
-                                            <h6><%= item.name%></h6>
+                                            <h6><%= item.name %></h6>
                                         </div>
                                         <div class="figure-caption">
-                                            <h6>SlotTime: <%= item.auctionSlot%></h6>
+                                            <h6>SlotTime: <%= item.auctionSlot %></h6>
                                         </div>
                                         <p>
                                             <a href="/campgrounds/<%= item._id %>" class="btn btn-primary">More Info</a>
                                         </p>
                                     </div>
                                 </div>
-                            <% }});%>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card card-body bg-light">
+                        <% }}); %>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-body bg-light">
                             <table class="table table-bordered table-hover" id="latestbid" class="display">
                                 <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col" >Bidder Name</th>
-                                    <th scope="col" >Bidding Amount</th>
-                                    <th scope="col" >Timestamp</th>
+                                    <th scope="col">Item Name</th>
+                                    <th scope="col">Highest Bid Amount</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th><strong></strong></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-
+                                <tr>
+                                    <th><strong></strong></th>
+                                    <th></th>
+                                </tr>
                                 </tbody>
                             </table>
-                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-body bg-light">
+                <h4 class="float-left"><strong>Item Table</strong></h4>
+
+                <hr>
+                <table id="selection" border="0" cellspacing="5" cellpadding="5">
+                    <tbody>
+                    <tr>
+                        <td>Starting Date:</td>
+                        <td><input type="text" id="min" name="min" placeholder=" YYYY-MM-DD"></td>
+                    </tr>
+                    <tr>
+                        <td>Ending Date:</td>
+                        <td><input type="text" id="max" name="max" placeholder=" YYYY-MM-DD"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-hover" id="itemlisttable" class="display">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>More info</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Minimum Bid</th>
+                        <th scope="col">Auction Date</th>
+                        <th scope="col">Auction Slot</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% items.forEach(function(item){ %>
+                        <tr>
+                            <th><a href="/campgrounds/<%= item._id %>" class="btn btn-primary">More Info</a></th>
+                            <th><%= item.name %></th>
+                            <th>$<%= item.minimumBid %></th>
+                            <th><%= item.auctionDate %></th>
+                            <th><%= item.auctionSlot %></th>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="card card-body bg-light">
-            <h4 class="float-left"><strong>Item Table</strong></h4>
-
-            <hr>
-            <table border="0" cellspacing="5" cellpadding="5">
-                <tbody><tr>
-                    <td>Starting Date:</td>
-                    <td><input type="text" id="min" name="min" placeholder=" YYYY-MM-DD"></td>
-                </tr>
-                <tr>
-                    <td>Ending Date:</td>
-                    <td><input type="text" id="max" name="max" placeholder=" YYYY-MM-DD"></td>
-                </tr>
-                </tbody></table>
-            <table class="table table-bordered table-hover" id="itemlisttable" class="display">
-                <thead class="thead-dark">
-                <tr>
-                    <th>More info</th>
-                    <th scope="col" >Item Name</th>
-                    <th scope="col" >Minimum Bid</th>
-                    <th scope="col" >Auction Date</th>
-                    <th scope="col" >Auction Slot</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <% items.forEach(function(item){%>
-                    <tr>
-                        <th><a href="/campgrounds/<%= item._id %>" class="btn btn-primary">More Info</a></th>
-                        <th><%= item.name %></th>
-                        <th>$<%= item.minimumBid%></th>
-                        <th><%= item.auctionDate%></th>
-                        <th><%= item.auctionSlot%></th>
-                    </tr>
-                <% })%>
-                </tbody>
-            </table>
-        </div>
     </div>
+</div>
+
 
 <% include ../partials/footer %>
