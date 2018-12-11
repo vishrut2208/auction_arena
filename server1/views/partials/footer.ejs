@@ -73,7 +73,7 @@
                     auctionDate: $('#auctionDate').val()
                 }
                 $.get(
-                    'http://localhost:3000/campgrounds/newslots',
+                    'https://localhost:3000/campgrounds/newslots',
                     {
                         params: payload,
                     },
@@ -103,7 +103,7 @@
         <script>
                 setInterval(function() {
                 $.get(
-                    'http://localhost:3000/campgrounds/topbids',
+                    'https://localhost:3000/campgrounds/topbids',
 
                     (data) => {
                         console.log(data)

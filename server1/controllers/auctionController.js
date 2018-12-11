@@ -101,9 +101,9 @@ function newItemPage(req, res) {
 
 
 function getSlot(req, res) {
-    //console.log(JSON.stringify(req.query.params))
+    console.log(JSON.stringify(req.query.params))
     var auctionDate = req.query.params.auctionDate;
-    //console.log(auctionDate);
+    console.log(auctionDate);
     try{
         slots.find({auctionDate: auctionDate, useFlag: true}, function(err, allslots){
             if(err){

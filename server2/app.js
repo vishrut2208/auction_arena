@@ -17,7 +17,15 @@ var express     = require("express"),
 var RSMQWorker = require( "rsmq-worker" );
 var worker = new RSMQWorker( "bidqueue",{maxReceiveCount:1} );
 
-
+const https = require("https"),
+        fs = require("fs");
+      
+const options = {
+                key: fs.readFileSync("./Certificates/groot-s2.pem",'utf8'),
+                cert: fs.readFileSync("./Certificates/groot-s2.crt",'utf8'),
+                ca:[fs.readFileSync("./Certificates/groot-s1.crt",'utf8')]
+                };
+      
 
 var itemRoutes = require("./routes/items");
 var adminRoutes = require("./routes/adminRoute")
@@ -38,7 +46,7 @@ app.locals.moment = moment;
 app.use("/admin",adminRoutes);
 app.use("/",itemRoutes);
 
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 app.listen("3001","127.0.0.1", function(){
   
@@ -89,4 +97,8 @@ worker.on('error', function( err, msg ){
   console.log( "ERROR", err, msg.id );
 });
 worker.start();
+});
+
+https.createServer(options, app).listen(3001, ()=>{
+  console.log("The AuctionService Backend Server Has Started!")
 });

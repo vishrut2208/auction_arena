@@ -15,7 +15,15 @@ var   express     = require("express"),
         LocalStrategy = require("passport-local"),
         moment       = require("moment"),
         comp = require('compression');
-
+        const cors = require('cors');
+const https = require("https"),
+        fs = require("fs");
+      
+const options = {
+                key: fs.readFileSync("./Certificates/groot-s1.pem",'utf8'),
+                cert: fs.readFileSync("./Certificates/groot-s1.crt",'utf8'),
+                };
+      
 //requiring Routes
 const   commentRoutes    = require("./routes/comments"),
         itemRoutes = require("./routes/items"),
@@ -78,7 +86,7 @@ app.use(function(req, res, next){
 //     // default to plain-text. send()
 //     res.type('txt').send('Not found');
 //   });
-
+app.use(cors());
 app.use("/",indexRoutes);
 app.use("/contact", indexRoutes)
 app.use("/profile",userRoutes);
@@ -90,9 +98,12 @@ app.use(function(req, res, next) {
     res.status(404);
     res.send('404: Resource Not Found');
 });
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 app.listen("3000", "127.0.0.1", function(){
    console.log("The AuctionService Frontend Server Has Started!")
 
     
+});
+https.createServer(options, app).listen(3000, ()=>{
+    console.log("The AuctionService Frontend Server Has Started!")
 });

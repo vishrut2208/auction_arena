@@ -17,7 +17,10 @@ function postItem(req, res){
     // console.log(fs.readFileSync(req.body.path))
     newItem.name= req.body.name;
     newItem.imageUrl=req.body.imageUrl;
-    newItem.image.data = fs.readFileSync(path);
+    if(req.body.fileName!=null)
+        newItem.image.data = fs.readFileSync(path);
+    else
+        newItem.image.data = null;
     newItem.image.contentType=req.body.mimetype;
     newItem.description = req.body.description;
     newItem.minimumBid=req.body.minimumBid;
