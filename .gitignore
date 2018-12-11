@@ -4,3 +4,4 @@ server2/node_modules
 action_arena.iml
 server1/package-lock.json
 server2/package-lock.json
+assets/
