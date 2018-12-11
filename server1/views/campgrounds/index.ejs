@@ -21,7 +21,9 @@
                                 <% if(item.auctionDate == (JSON.stringify(new Date()).slice(1, 11))){%>
                                 <div class="col-lg-6 col-md-6 col-xs-6 thumb">
                                     <div class="thumbnail" id="home">
-                                        <img class="img-fluid rounded float-left" src="<%= item.image%>" alt="<%= item.name%>">
+                            		<!-- <img class="img-fluid rounded float-left" src="<%= item.imageUrl%>" alt="<%= item.name%>"> -->
+                            		<img class="img-fluid rounded float-left" src="<%= item.imageUrl%>"  onerror="this.onerror=null;this.src='<%= item._id%>/getPicture';">
+                            		<!-- <img class="img-fluid rounded float-left" src='<%= item._id%>/getPicture'> -->
                                         <div class="figure-caption">
                                             <h6><%= item.name%></h6>
                                         </div>

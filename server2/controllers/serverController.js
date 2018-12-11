@@ -8,7 +8,7 @@ function token_authorization(req,res,next){
     // var token = req.body.token || req.query.token || req.headers['X-Custom-Token'] || null;
     
     var token = req.headers['x-custom-token']; 
-    console.log(token)
+    // console.log(token)
     // decode token
     if (token) {
         // verifies secret and checks exp

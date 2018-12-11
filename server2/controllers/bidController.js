@@ -9,9 +9,9 @@ module.exports = {
         console.log("Im in new bid")
         obj = JSON.parse(req);
         console.log("Bid Amount:"+obj.bidAmount)
-        console.log("Bid Amount:"+obj.user_id)
-        console.log("Bid Amount:"+obj.username)
-        console.log("Bid Amount:"+obj.item_id)
+        console.log("UserId:"+obj.user_id)
+        console.log("UserName:"+obj.username)
+        console.log("Item_id:"+obj.item_id)
         try{
             Bid.find({bidamount: {$gt: parseInt(obj.bidAmount)}}, function(err, higherbid){
                 if(err){
@@ -44,7 +44,7 @@ module.exports = {
                             }
                         });
                 }else{
-                    console.log("missed an entry");
+                    console.log("Bid Rejected");
                 }
 
             });

@@ -5,7 +5,7 @@ var User = require("../models/user");
 //Get the profile Page for the current user
 function getProfile(req, res){
 
-    console.log("i am at profile page")
+    // console.log("i am at profile page")
     // res.render("profilesetup/show")
     // console.log(req.user._id)
     User.findById(req.user._id).exec(function(err,founduser){
@@ -15,7 +15,7 @@ function getProfile(req, res){
             res.send('404: Resource Not Found');
         }
         else{
-            console.log(founduser);
+            // console.log(founduser);
             res.render("profilesetup/show",{user:founduser})
         }
     })

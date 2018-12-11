@@ -3,7 +3,9 @@ var mongoose= require("mongoose");
 // Schema Setup
 var itemSchema = new mongoose.Schema({
     name: String,
-    image: String,
+    imageUrl:String,
+    image: 
+    { data: Buffer, contentType: String },
     description: String,
     imageTag: String,
     minimumBid: Number,

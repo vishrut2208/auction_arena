@@ -4,12 +4,38 @@ var Item = require("../models/item");
 var middleware = require("../middleware");
 var controller = require("../controllers/auctionController")
 var cacheware = require("../middleware/cacheresponse").data
+const multer = require('multer');
+const fs = require('fs')
+const path = require('path')
 
+const mkdirSync = function (dirPath) {
+  try {
+    fs.mkdirSync(dirPath)
+  } catch (err) {
+    if (err.code !== 'EEXIST') throw err
+  }
+}
+
+
+
+const storage = multer.diskStorage({
+    destination: function(req,file,cb) {
+        mkdirSync(path.resolve('../assets'))
+        mkdirSync(path.resolve('../assets/images'))
+        cb(null,"../assets/images/");
+    },
+    filename: function(req,file,cb) {
+        cb(null, file.originalname);
+    }
+})
+
+const upload = multer({storage});
 //Index- show all campgrounds
 router.get("/",cacheware.cache(20), controller.getItems);
 
 //Create - add new campground
-router.post("/",middleware.isLoggedIn, controller.postItem);
+router.post("/",middleware.isLoggedIn,upload.single('ItemImage'), controller.postItem);
+//router.post("/",upload.single('ItemImage'), controller.postItem);
 
 //new-show form to create new campground
 router.get("/new",middleware.isLoggedIn, controller.newItemPage);
@@ -27,6 +53,8 @@ router.get("/:id", controller.getItem);
 // Destroy item route
 
 router.post("/:id", middleware.checkCampgroundOwnership, controller.deleteItem)
+
+router.get("/:id/getPicture", controller.getPicture)
 
 //Edit item route
 

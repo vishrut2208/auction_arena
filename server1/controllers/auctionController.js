@@ -31,9 +31,20 @@ catch(err){
 }
 
 function postItem(req, res){
+    // console.log("Req"+req)
+    // console.log("File:"+req.file)
+    if(req.file!=null){
+        var fileName = req.file.originalname;
+        var mimetype = req.file.mimetype;
 
+    }
+    else
+    {
+        var fileName = null;
+        var mimetype = null;
+    }
     var name = req.body.name;
-    var image = req.body.image;
+    var imageUrl = req.body.image;
     var desc = req.body.description;
     var minimumBid = req.body.minimumBid;
     var auctionDate = req.body.auctionDate;
@@ -42,29 +53,24 @@ function postItem(req, res){
         id: req.user._id,
         username: req.user.username
     }
-    var newItem = {name: name, image: image, description: desc, minimumBid:minimumBid, auctionDate: auctionDate, auctionSlot: auctionSlot, author: author}
-
-    //console.log(newItem)
+    var newItem = {name: name, imageUrl: imageUrl, description: desc, minimumBid:minimumBid, auctionDate: auctionDate, auctionSlot: auctionSlot, author: author,fileName:fileName,mimetype:mimetype}
     axios.create({
         baseURL: "http://localhost:3001/",
         headers: { "X-Custom-Token": "super007" }
     }).post("member/postItem", newItem).then((response)=> {
         //console.log("Successsssssssssssssssss");
-        res.redirect("/campgrounds");
         if(response.data.success){
-            return res.send({
-                success : true
-
-            })
+            return res.status(200)
 
         } else {
-            return res.send({
-                success : false
-            })
+            res.status(500)
         }
+        res.redirect("/campgrounds");
     }).catch(function (error) {
         //console.log("Errorrrrrrrrrrrrrrrrrrrrrr")
-        console.log(error.response);
+        req.flash("Backend server not responsing")
+        console.log(error);
+        res.send('500: Internal server error');
     });
 }
 
@@ -146,7 +152,6 @@ function getItem(req, res) {
             res.status(404);
             res.send('404: Resource Not Found');
        }else {
-           console.log(foundItem)
            res.status(200);
            res.render("campgrounds/show",{item: foundItem});
        }
@@ -159,10 +164,17 @@ catch(err){
 }
 }
 
-
+function getPicture(req,res) {
+    Item.findById( req.params.id).exec(function(err,foundItem) {
+        if (err) return next(err);
+        console.log("Im in  getPicture")
+        res.contentType(foundItem.image.contentType);
+        res.send(foundItem.image.data);
+    });
+}
 
 function deleteItem(req, res){
-    console.log(req.params.id);
+    // console.log(req.params.id);
 
     axios.create({
         baseURL: "http://localhost:3001/",
@@ -182,8 +194,10 @@ function deleteItem(req, res){
             })
         }
     }).catch(function (error) {
-        console.log("Errorrrrrrrrrrrrrrrrrrrrrr===============================================")
-        console.log(error.response);
+            //console.log("Errorrrrrrrrrrrrrrrrrrrrrr")
+            req.flash("Backend server not responsing")
+            console.log(error);
+            res.send(err)
     });
 
 };
@@ -198,6 +212,7 @@ module.exports = { getItems,
                    newItemPage,
                    getItem,
                    getSlot,
+                   getPicture,
                    deleteItem,
                    getTop5
                 }

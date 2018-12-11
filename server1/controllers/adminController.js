@@ -16,8 +16,8 @@ function adminPost(req, res) {
     var diff = moment(endTime).diff(moment(startTime), 'minutes');
     var perHour = Math.floor(diff/ maximumPost);
     var auctionDate = startTime.slice(0, 10)
-    console.log(typeof auctionDate)
-    console.log(auctionDate)
+    // console.log(typeof auctionDate)
+    // console.log(auctionDate)
     var newItem = {
         auctionDate: auctionDate,
         maximumPost: maximumPost,

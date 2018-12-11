@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="thumbnail" id="itemimage">
-                <img class="img-responsive" src="<%= item.image %>">
+                <img class="img-responsive" src="<%= item.imageUrl %>" onerror="this.onerror=null;this.src='<%= item._id%>/getPicture';">
                 <div class="figure-caption">
                     <h4 class="float-right"> MB: $<%= item.minimumBid %></h4>
                     <h4 class="font-italic"><%=item.name%></h4>

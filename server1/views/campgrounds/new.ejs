@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="row">
-        <form class="form-signup" action="/campgrounds" method="POST" >
+        <form class="form-signup" enctype="multipart/form-data" action="/campgrounds" method="POST" >
             <div class="card card-body bg-light">
                 <div class="text-center mb-4">
                     <h1 class="h3 mb-3 font-weight-normal">Post a new item!!</h1>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Uploadimage">Upload Image</label>
-                        <input type="file" class="form-control-file" id="Uploadimage">
+                        <input type="file" class="form-control-file" id="Uploadimage" name="ItemImage">
                     </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Post Item</button>
                 </div>
